@@ -2,3 +2,4 @@ Flask==1.1.1
 Flask-Sockets==0.2.1
 MarkupSafe==1.1.1
 google-cloud-speech
+twilio

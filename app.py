@@ -9,8 +9,9 @@ import threading
 import time
 
 from google.cloud import speech
+from twilio.rest import Client
 
-from flask import Flask
+from flask import Flask, Response
 from flask_sockets import Sockets
 
 app = Flask(__name__)
@@ -200,6 +201,19 @@ def stream_transcript(stream):
         except:
             pass
         time.sleep(5)
+
+@app.route('/twiml', methods=['POST'])
+def twiml():
+    # The XML string you want to return
+    xml = '''<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+    <Start>
+        <Stream url="wss://cce2-2601-647-6680-1580-78ac-2214-f878-3b1e.ngrok.io/media" />
+    </Start>
+    <Pause length="60"/>
+</Response>
+    '''
+    return Response(xml, mimetype='text/xml')
 
 if __name__ == '__main__':
     app.logger.setLevel(logging.DEBUG)
